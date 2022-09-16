@@ -33,15 +33,16 @@ class MainActivity : ScopeActivity() {
 
         listenData()
 
-        val swipeToDeleteCallback = object : SwipeToDeleteCallback(){
+
+        val swipeGesture = object: SwipeGesture(this){
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val position = viewHolder.adapterPosition
+                val position = viewHolder.layoutPosition
                 viewModel.deleteArticle(position)
                 binding.recyclerArticles.adapter?.notifyItemRemoved(position)
             }
         }
 
-        val itemTouchHelper = ItemTouchHelper(swipeToDeleteCallback)
+        val itemTouchHelper = ItemTouchHelper(swipeGesture)
         itemTouchHelper.attachToRecyclerView(binding.recyclerArticles)
 
     }
